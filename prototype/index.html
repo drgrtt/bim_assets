@@ -3,31 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>BIMBO METHOD — prototype</title>
+  <title>BIMBO METHOD</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div id="setupBanner" class="setup-banner hidden">
-    ДЕМО-РЕЖИМ: Firebase пока не подключён. Прогресс хранится только в этом браузере.
-  </div>
+  <div id="setupBanner" class="setup-banner hidden"></div>
 
   <main id="authView" class="auth-view">
     <section class="auth-card">
       <div class="eyebrow">BIMBO LAB PRESENTS</div>
       <h1>BIMBO<br><span>METHOD</span></h1>
-      <p>Войди в свой курс. Прогресс и результаты тестов будут привязаны к аккаунту после подключения Firebase.</p>
-
-      <div class="auth-tabs">
-        <button id="tabLogin" class="tab active" type="button">ВОЙТИ</button>
-        <button id="tabSignup" class="tab" type="button">РЕГИСТРАЦИЯ</button>
-      </div>
+      <p id="authIntro">Войди в свой курс. Прогресс и результаты тестов сохраняются за твоим аккаунтом.</p>
 
       <form id="authForm">
         <label>Email<input id="email" type="email" autocomplete="email" required></label>
         <label>Пароль<input id="password" type="password" autocomplete="current-password" minlength="6" required></label>
         <button id="authSubmit" class="primary" type="submit">ВОЙТИ →</button>
       </form>
-      <button id="demoLogin" class="ghost" type="button">ВОЙТИ В ДЕМО</button>
+
+      <form id="inviteForm" class="hidden">
+        <label>Придумай пароль<input id="invitePassword" type="password" autocomplete="new-password" minlength="6" required></label>
+        <label>Повтори пароль<input id="invitePassword2" type="password" autocomplete="new-password" minlength="6" required></label>
+        <button class="primary" type="submit">АКТИВИРОВАТЬ ДОСТУП →</button>
+      </form>
+
+      <form id="recoveryForm" class="hidden">
+        <label>Новый пароль<input id="recoveryPassword" type="password" autocomplete="new-password" minlength="6" required></label>
+        <label>Повтори пароль<input id="recoveryPassword2" type="password" autocomplete="new-password" minlength="6" required></label>
+        <button class="primary" type="submit">СОХРАНИТЬ НОВЫЙ ПАРОЛЬ →</button>
+      </form>
+
+      <button id="forgotPassword" class="ghost" type="button">ЗАБЫЛА ПАРОЛЬ?</button>
+      <div id="authHint" class="auth-hint">Доступ к BIMBO METHOD выдаётся по приглашению.</div>
       <div id="authMessage" class="message"></div>
     </section>
   </main>
@@ -149,7 +156,7 @@
           <div id="module02Open" class="lesson-placeholder hidden">
             <div class="eyebrow">MODULE 02 / UNLOCKED</div>
             <h2>ПЕРСОНАЖ</h2>
-            <p>Вот сюда дальше встанет полноценная вторая страница. В прототипе главное — Module 02 открылся именно после успешного Test 01 и останется открытым после повторного входа.</p>
+            <p>Вот сюда дальше встанет полноценная вторая страница. В прототипе главное — Module 02 открылся именно после успешного Test 01 и останется открытым на другом устройстве после входа в тот же аккаунт.</p>
           </div>
         </div>
       </section>
