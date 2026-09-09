@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BIMBO METHOD — prototype</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="setupBanner" class="setup-banner hidden">
+    ДЕМО-РЕЖИМ: Firebase пока не подключён. Прогресс хранится только в этом браузере.
+  </div>
+
+  <main id="authView" class="auth-view">
+    <section class="auth-card">
+      <div class="eyebrow">BIMBO LAB PRESENTS</div>
+      <h1>BIMBO<br><span>METHOD</span></h1>
+      <p>Войди в свой курс. Прогресс и результаты тестов будут привязаны к аккаунту после подключения Firebase.</p>
+
+      <div class="auth-tabs">
+        <button id="tabLogin" class="tab active" type="button">ВОЙТИ</button>
+        <button id="tabSignup" class="tab" type="button">РЕГИСТРАЦИЯ</button>
+      </div>
+
+      <form id="authForm">
+        <label>Email<input id="email" type="email" autocomplete="email" required></label>
+        <label>Пароль<input id="password" type="password" autocomplete="current-password" minlength="6" required></label>
+        <button id="authSubmit" class="primary" type="submit">ВОЙТИ →</button>
+      </form>
+      <button id="demoLogin" class="ghost" type="button">ВОЙТИ В ДЕМО</button>
+      <div id="authMessage" class="message"></div>
+    </section>
+  </main>
+
+  <div id="appView" class="app hidden">
+    <header class="topbar">
+      <div class="brand">BIMBO METHOD</div>
+      <div class="top-actions">
+        <div id="userEmail" class="user-email"></div>
+        <button id="logoutBtn" class="small-btn" type="button">ВЫЙТИ</button>
+      </div>
+    </header>
+
+    <div class="app-grid">
+      <aside class="sidebar">
+        <div class="progress-card">
+          <div class="eyebrow">ТВОЙ ПРОГРЕСС</div>
+          <div class="progress-big"><span id="progressCount">0</span>/13</div>
+          <div class="progress-track"><i id="progressBar"></i></div>
+        </div>
+
+        <nav class="nav">
+          <button data-route="dashboard" class="nav-btn active">ОБЗОР</button>
+          <button data-route="module01" class="nav-btn">01. КОНЦЕПЦИЯ И НИША</button>
+          <button data-route="test01" class="nav-btn">TEST 01</button>
+          <button id="module02Nav" data-route="module02" class="nav-btn locked">02. ПЕРСОНАЖ <span>LOCKED</span></button>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <div id="dashboard" class="route active">
+          <div class="hero-card">
+            <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/01_hello.jpg" alt="">
+            <div class="hero-overlay"></div>
+            <div class="hero-copy">
+              <div class="eyebrow">BIMBO METHOD</div>
+              <h2>ПРИВЕТ,<br><span>БЭЙБИ.</span></h2>
+              <p>Твой курс живёт здесь. Система запоминает, что ты уже прошла, и открывает следующий шаг после теста.</p>
+              <button class="primary" data-go="module01" type="button">ПРОДОЛЖИТЬ →</button>
+            </div>
+          </div>
+
+          <div class="module-list">
+            <article class="module-row open">
+              <div><small>MODULE 01</small><h3>КОНЦЕПЦИЯ И НИША</h3></div>
+              <button data-go="module01" type="button">ОТКРЫТЬ →</button>
+            </article>
+            <article id="module02Row" class="module-row locked">
+              <div><small>MODULE 02</small><h3>ПЕРСОНАЖ</h3></div>
+              <span id="module02State">СНАЧАЛА TEST 01</span>
+            </article>
+          </div>
+        </div>
+
+        <div id="module01" class="route">
+          <div class="lesson-hero">
+            <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_01_hero.jpg" alt="">
+            <div class="lesson-overlay"></div>
+            <div class="lesson-copy">
+              <div class="eyebrow">MODULE 01 / 13</div>
+              <h2>КОНЦЕПЦИЯ<br><span>И НИША</span></h2>
+              <p>До того как выбирать лицо, волосы и одежду, надо понять, кого вообще мы создаём.</p>
+            </div>
+          </div>
+
+          <div class="lesson-body">
+            <div class="text-block">
+              <div class="eyebrow">ГЛАВНАЯ МЫСЛЬ</div>
+              <h3>КРАСИВАЯ ДЕВУШКА — ЭТО ЕЩЁ НЕ КОНЦЕПЦИЯ.</h3>
+              <p>Концепция отвечает не только на вопрос «как она выглядит», а на вопросы: кто она, для кого она, какое ощущение даёт и откуда у неё берётся жизнь для контента.</p>
+            </div>
+
+            <div class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_02_pretty_vs_concept.jpg" alt=""></div>
+
+            <div class="chips">
+              <span>НИША</span><span>АУДИТОРИЯ</span><span>ЭМОЦИОНАЛЬНАЯ РОЛЬ</span><span>МИР</span><span>КОНТЕНТ</span><span>ПРОДУКТ</span>
+            </div>
+
+            <div class="end-card">
+              <small>MODULE 01 / CHECKPOINT</small>
+              <h3>ГОТОВА ПРОВЕРИТЬ, ПОНЯЛА ЛИ ТЫ СУТЬ?</h3>
+              <p>5 вопросов. Проходной результат — 4/5.</p>
+              <button class="primary" data-go="test01" type="button">ПЕРЕЙТИ К TEST 01 →</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="test01" class="route">
+          <div class="quiz-head">
+            <div class="eyebrow">MODULE 01 / CHECKPOINT</div>
+            <h2>TEST 01</h2>
+            <p>Нужно набрать минимум 4/5. После этого Module 02 откроется автоматически.</p>
+          </div>
+
+          <div id="quizCard" class="quiz-card">
+            <div id="questionMeta" class="eyebrow"></div>
+            <h3 id="questionText"></h3>
+            <div id="answers" class="answers"></div>
+            <div id="quizFeedback" class="quiz-feedback hidden"></div>
+            <button id="nextQuestion" class="primary hidden" type="button">ДАЛЬШЕ →</button>
+          </div>
+
+          <div id="quizResult" class="result-card hidden">
+            <div id="resultScore" class="result-score"></div>
+            <h3 id="resultTitle"></h3>
+            <p id="resultText"></p>
+            <div id="resultActions" class="result-actions"></div>
+          </div>
+        </div>
+
+        <div id="module02" class="route">
+          <div id="module02Locked" class="locked-screen">
+            <div class="lock">×</div>
+            <div class="eyebrow">MODULE 02</div>
+            <h2>ПЕРСОНАЖ ПОКА ЗАКРЫТ.</h2>
+            <p>Сначала пройди Test 01 минимум на 4/5.</p>
+            <button class="primary" data-go="test01" type="button">К TEST 01 →</button>
+          </div>
+          <div id="module02Open" class="lesson-placeholder hidden">
+            <div class="eyebrow">MODULE 02 / UNLOCKED</div>
+            <h2>ПЕРСОНАЖ</h2>
+            <p>Вот сюда дальше встанет полноценная вторая страница. В прототипе главное — Module 02 открылся именно после успешного Test 01 и останется открытым после повторного входа.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
