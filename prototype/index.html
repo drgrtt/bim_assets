@@ -57,108 +57,158 @@
         </div>
 
         <nav class="nav">
-          <button data-route="dashboard" class="nav-btn active">ОБЗОР</button>
+          <button data-route="onboarding" class="nav-btn">СТАРТ</button>
+          <button data-route="dashboard" class="nav-btn">ОБЗОР</button>
           <button data-route="module01" class="nav-btn">01. КОНЦЕПЦИЯ И НИША</button>
           <button data-route="test01" class="nav-btn">TEST 01</button>
           <button id="module02Nav" data-route="module02" class="nav-btn locked">02. ПЕРСОНАЖ <span>LOCKED</span></button>
+          <button id="test02Nav" data-route="test02" class="nav-btn locked">TEST 02 <span>LOCKED</span></button>
+          <button id="module03Nav" data-route="module03" class="nav-btn locked">03. ВНЕШНОСТЬ <span>LOCKED</span></button>
         </nav>
       </aside>
 
       <section class="content">
-        <div id="dashboard" class="route active">
+        <div id="onboarding" class="route">
+          <section class="onboard-screen onboard-hero">
+            <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/01_hello.jpg" alt="">
+            <div class="onboard-overlay"></div>
+            <div class="onboard-copy">
+              <div class="eyebrow">BIMBO LAB PRESENTS</div>
+              <h2>ПРИВЕТ,<br><span>БЭЙБИ.</span></h2>
+              <p>Ты в BIMBO METHOD. За 13 модулей мы проведём одну AI-модель от идеи до работающей системы.</p>
+              <strong>Одна модель. Один путь. От идеи до работающей системы.</strong>
+              <a class="primary anchor-btn" href="#onboard2">ПОЕХАЛИ ↓</a>
+            </div>
+          </section>
+
+          <section id="onboard2" class="onboard-screen split-card">
+            <div class="split-text">
+              <div class="eyebrow">ЧТО ТАКОЕ BIMBO METHOD</div>
+              <h3>ЗДЕСЬ МЫ СОЗДАЁМ НЕ КАРТИНКИ.<br><span>МЫ СОЗДАЁМ ПЕРСОНАЖА.</span></h3>
+              <p>Лицо может быть красивым. Генерация может быть идеальной. Но проект начинает жить только тогда, когда у девушки есть характер, мир, контентная логика и причина, по которой за ней хочется следить.</p>
+            </div>
+            <div class="contact-sheet">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/02_character.jpg" alt="">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/08_final_world.jpg" alt="">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/09_final_identity.jpg" alt="">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/10_final_lifestyle.jpg" alt="">
+            </div>
+          </section>
+
+          <section class="onboard-screen route-map-card">
+            <div class="eyebrow">ТВОЙ МАРШРУТ</div>
+            <h3>13 МОДУЛЕЙ.<br>4 ЭТАПА.<br><span>ОДНА МОДЕЛЬ.</span></h3>
+            <div class="stage-grid">
+              <article><small>01–03</small><h4>СОЗДАЁМ ОСНОВУ</h4><p>Концепция / Персонаж / Внешность</p></article>
+              <article><small>04–06</small><h4>НАСТРАИВАЕМ ГЕНЕРАЦИЮ</h4><p>Рабочая среда / Контент / Промпты</p></article>
+              <article><small>07–09</small><h4>ПРИВОДИМ АУДИТОРИЮ</h4><p>Threads + запретграм / Воронка</p></article>
+              <article><small>10–13</small><h4>НАСТРАИВАЕМ МОНЕТИЗАЦИЮ</h4><p>Telegram / Fanvue / Продукт / Чатинг / Запуск</p></article>
+            </div>
+          </section>
+
+          <section class="onboard-screen split-card reverse">
+            <div class="split-image"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/07_learning.jpg" alt=""></div>
+            <div class="split-text">
+              <div class="eyebrow">КАК МЫ УЧИМСЯ</div>
+              <h3>ОДИН МОДУЛЬ = <span>ОДНА ПОНЯТНАЯ ЗАДАЧА.</span></h3>
+              <div class="flow-line"><b>ПОНЯТЬ</b><i>→</i><b>ПРИМЕРЫ</b><i>→</i><b>ОШИБКИ</b><i>→</i><b>ПРИМЕНИТЬ</b><i>→</i><b>ТЕСТ</b></div>
+              <p>Следующий модуль открывается после теста. Ты не просто читаешь курс, а параллельно собираешь собственный проект.</p>
+            </div>
+          </section>
+
+          <section class="onboard-screen final-state">
+            <div class="eyebrow">К ЧЕМУ ПРИДЁМ</div>
+            <h3>НЕ ПРОСТО К КРАСИВОЙ ГЕНЕРАЦИИ.</h3>
+            <div class="final-gallery">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/08_final_world.jpg" alt="">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/09_final_identity.jpg" alt="">
+              <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/10_final_lifestyle.jpg" alt="">
+            </div>
+            <div class="system-strip">TRAFFIC / FUNNEL / TELEGRAM / FANVUE / OFFER / CHAT / LAUNCH</div>
+            <p>У модели будет узнаваемое лицо, свой мир, стабильный контент и понятная система движения аудитории к платному предложению.</p>
+          </section>
+
+          <section class="onboard-screen start-module">
+            <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/11_module_start.jpg" alt="">
+            <div class="onboard-overlay"></div>
+            <div class="onboard-copy">
+              <div class="eyebrow">MODULE 01</div>
+              <h3>НАЧИНАЕМ<br><span>НЕ С ЛИЦА.</span></h3>
+              <p>Первый вопрос не «как она выглядит?». Первый вопрос: кто она, для кого она и почему за ней будут следить.</p>
+              <button id="finishOnboarding" class="primary" type="button">НАЧАТЬ MODULE 01 →</button>
+            </div>
+          </section>
+        </div>
+
+        <div id="dashboard" class="route">
           <div class="hero-card">
             <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/01_hello.jpg" alt="">
             <div class="hero-overlay"></div>
             <div class="hero-copy">
               <div class="eyebrow">BIMBO METHOD</div>
-              <h2>ПРИВЕТ,<br><span>БЭЙБИ.</span></h2>
-              <p>Твой курс живёт здесь. Система запоминает, что ты уже прошла, и открывает следующий шаг после теста.</p>
-              <button class="primary" data-go="module01" type="button">ПРОДОЛЖИТЬ →</button>
+              <h2>ТВОЙ<br><span>МАРШРУТ.</span></h2>
+              <p>Проходи модули по порядку. Тест открывает следующий шаг, а прогресс остаётся за аккаунтом.</p>
+              <button id="continueBtn" class="primary" type="button">ПРОДОЛЖИТЬ →</button>
             </div>
           </div>
 
           <div class="module-list">
-            <article class="module-row open">
-              <div><small>MODULE 01</small><h3>КОНЦЕПЦИЯ И НИША</h3></div>
-              <button data-go="module01" type="button">ОТКРЫТЬ →</button>
-            </article>
-            <article id="module02Row" class="module-row locked">
-              <div><small>MODULE 02</small><h3>ПЕРСОНАЖ</h3></div>
-              <span id="module02State">СНАЧАЛА TEST 01</span>
-            </article>
+            <article class="module-row open"><div><small>MODULE 01</small><h3>КОНЦЕПЦИЯ И НИША</h3></div><button data-go="module01" type="button">ОТКРЫТЬ →</button></article>
+            <article id="module02Row" class="module-row locked"><div><small>MODULE 02</small><h3>ПЕРСОНАЖ</h3></div><span id="module02State">СНАЧАЛА TEST 01</span></article>
+            <article id="module03Row" class="module-row locked"><div><small>MODULE 03</small><h3>ВНЕШНОСТЬ</h3></div><span id="module03State">СНАЧАЛА TEST 02</span></article>
           </div>
         </div>
 
         <div id="module01" class="route">
-          <div class="lesson-hero">
-            <img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_01_hero.jpg" alt="">
-            <div class="lesson-overlay"></div>
-            <div class="lesson-copy">
-              <div class="eyebrow">MODULE 01 / 13</div>
-              <h2>КОНЦЕПЦИЯ<br><span>И НИША</span></h2>
-              <p>До того как выбирать лицо, волосы и одежду, надо понять, кого вообще мы создаём.</p>
-            </div>
-          </div>
-
+          <div class="lesson-hero"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_01_hero.jpg" alt=""><div class="lesson-overlay"></div><div class="lesson-copy"><div class="eyebrow">BIMBO METHOD / MODULE 01</div><h2>КОНЦЕПЦИЯ<br><span>И НИША</span></h2><p>К концу модуля должно быть понятно: кто она, для кого она и почему за ней интересно следить.</p></div></div>
           <div class="lesson-body">
-            <div class="text-block">
-              <div class="eyebrow">ГЛАВНАЯ МЫСЛЬ</div>
-              <h3>КРАСИВАЯ ДЕВУШКА — ЭТО ЕЩЁ НЕ КОНЦЕПЦИЯ.</h3>
-              <p>Концепция отвечает не только на вопрос «как она выглядит», а на вопросы: кто она, для кого она, какое ощущение даёт и откуда у неё берётся жизнь для контента.</p>
-            </div>
-
-            <div class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_02_pretty_vs_concept.jpg" alt=""></div>
-
-            <div class="chips">
-              <span>НИША</span><span>АУДИТОРИЯ</span><span>ЭМОЦИОНАЛЬНАЯ РОЛЬ</span><span>МИР</span><span>КОНТЕНТ</span><span>ПРОДУКТ</span>
-            </div>
-
-            <div class="end-card">
-              <small>MODULE 01 / CHECKPOINT</small>
-              <h3>ГОТОВА ПРОВЕРИТЬ, ПОНЯЛА ЛИ ТЫ СУТЬ?</h3>
-              <p>5 вопросов. Проходной результат — 4/5.</p>
-              <button class="primary" data-go="test01" type="button">ПЕРЕЙТИ К TEST 01 →</button>
-            </div>
+            <section class="lesson-section"><div class="eyebrow">01 / СНАЧАЛА ИДЕЯ</div><h3>КРАСИВАЯ ДЕВУШКА — ЭТО ЕЩЁ НЕ КОНЦЕПЦИЯ.</h3><p>Внешность отвечает на вопрос «как она выглядит». Концепция отвечает на вопросы «кто она», «какое ощущение даёт», «для кого существует» и «откуда регулярно берётся контент».</p></section>
+            <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_02_pretty_vs_concept.jpg" alt=""></figure>
+            <section class="lesson-section"><div class="eyebrow">02 / ИЗ ЧЕГО СОБИРАЕТСЯ КОНЦЕПЦИЯ</div><div class="chips big"><span>НИША</span><span>ЭМОЦИОНАЛЬНАЯ РОЛЬ</span><span>АУДИТОРИЯ</span><span>ЖИЗНЬ</span><span>КОНТЕНТ</span><span>ПРОДУКТ</span></div><p>Эти части должны работать вместе. Если убрать любую из них, модель быстро превращается либо в красивый мудборд, либо в случайный набор публикаций.</p></section>
+            <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_03_concept_system.jpg" alt=""></figure>
+            <section class="lesson-section"><div class="eyebrow">03 / ДЛЯ КОГО ОНА</div><h3>«ДЛЯ ВСЕХ» = НИ ДЛЯ КОГО.</h3><p>Нам не нужен портрет аудитории на двадцать пунктов. Нужно понять контекст: кто должен увидеть её и сразу почувствовать «это мой тип контента».</p></section>
+            <section class="lesson-section"><div class="eyebrow">04 / ЭМОЦИОНАЛЬНАЯ РОЛЬ</div><h3>КАКОЕ ОЩУЩЕНИЕ ОНА ДАЁТ?</h3><p>Bestie, crush, luxury baby, chaotic girl, calm wellness girl — это не просто слова. Роль задаёт тип отношений между персонажем и аудиторией.</p></section>
+            <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_05_emotional_roles.jpg" alt=""></figure>
+            <section class="lesson-section"><div class="eyebrow">05 / ТЕСТ НА ЖИЗНЬ</div><h3>НИША ДАЁТ НЕ КОСТЮМ. НИША ДАЁТ СИТУАЦИИ.</h3><p>Стюардесса — это не только форма. Это аэропорты, перелёты, отели, чемоданы, задержки и разные города. Gamer girl — это ночные катки, сетап, мемы, энергетики, rage-моменты и бытовой хаос. Хорошая ниша даёт десятки разных сцен без ощущения повтора.</p></section>
+            <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_04_niches.jpg" alt=""></figure>
+            <section class="lesson-section"><div class="eyebrow">06 / НЕ ПУТАЙ НИШУ С ВНЕШНОСТЬЮ</div><h3>КАБЛУКИ, ТАТУИРОВКИ И Y2K — ЕЩЁ НЕ НИША.</h3><p>Это визуальные признаки. Они могут усиливать персонажа, но сами по себе не отвечают на вопрос, как она живёт и что будет происходить в её контенте завтра.</p></section>
+            <section class="lesson-section checklist"><div class="eyebrow">07 / ПРОВЕРЬ НИШУ</div><h3>ПЯТЬ ВОПРОСОВ ПЕРЕД ТЕМ, КАК ИДТИ ДАЛЬШЕ.</h3><ol><li>Можно ли придумать 30 разных ситуаций?</li><li>Понятно ли, кто захочет на неё подписаться?</li><li>Есть ли у неё эмоциональная роль?</li><li>Можно ли отличить её от сотни похожих моделей?</li><li>Понятно ли, что она потенциально сможет продавать?</li></ol></section>
+            <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_06_weak_vs_strong.jpg" alt=""></figure>
+            <section class="lesson-section compare"><div class="eyebrow">08 / СЛАБО VS СИЛЬНО</div><div class="compare-grid"><article><small>СЛАБО</small><h4>«КРАСИВАЯ GAMER GIRL»</h4><p>Направление есть, персонажа нет.</p></article><article><small>СИЛЬНО</small><h4>«ДОМАШНЯЯ GAMER GIRL, КОТОРАЯ ОЩУЩАЕТСЯ КАК ВЕСЁЛАЯ ИНТЕРНЕТ-ПОДРУГА»</h4><p>Понятны роль, жизнь, настроение и источники контента.</p></article></div></section>
+            <section class="lesson-section"><div class="eyebrow">09 / ЧТО УБИВАЕТ КОНЦЕПЦИЮ</div><div class="error-grid"><span>СЛИШКОМ ШИРОКО</span><span>ТОЛЬКО ЭСТЕТИКА</span><span>НЕТ РОЛИ</span><span>НЕТ ЖИЗНИ</span><span>КОПИЯ ЧУЖОЙ МОДЕЛИ</span><span>НИША БЕЗ КОНТЕНТ-ДВИГАТЕЛЯ</span></div></section>
+            <section class="case-card"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/m01_07_naughty_bestie.jpg" alt=""><div><div class="eyebrow">10 / КЕЙС BIMBO LAB</div><h3>NAUGHTY BESTIE</h3><p>Смысл не в одном типе фотографии. Персонаж продаёт ощущение близости, контекст и эмоциональный сценарий. Поэтому один и тот же образ можно разворачивать в десятки разных ситуаций.</p></div></section>
+            <section class="formula-card"><div class="eyebrow">11 / ПРОСТАЯ ФОРМУЛА</div><h3>ОНА — [КТО], КОТОРАЯ ДАЁТ АУДИТОРИИ [КАКОЕ ОЩУЩЕНИЕ] ЧЕРЕЗ [КАКОЙ МИР И КОНТЕНТ].</h3></section>
+            <div class="end-card"><small>MODULE 01 / CHECKPOINT</small><h3>КОНЦЕПЦИЯ ДОЛЖНА ОБЪЯСНЯТЬ ЖИЗНЬ МОДЕЛИ, А НЕ ТОЛЬКО ЕЁ ВНЕШНОСТЬ.</h3><p>5 вопросов. Проходной результат — 4/5.</p><button class="primary" data-go="test01" type="button">ПЕРЕЙТИ К TEST 01 →</button></div>
           </div>
         </div>
 
-        <div id="test01" class="route">
-          <div class="quiz-head">
-            <div class="eyebrow">MODULE 01 / CHECKPOINT</div>
-            <h2>TEST 01</h2>
-            <p>Нужно набрать минимум 4/5. После этого Module 02 откроется автоматически.</p>
-          </div>
-
-          <div id="quizCard" class="quiz-card">
-            <div id="questionMeta" class="eyebrow"></div>
-            <h3 id="questionText"></h3>
-            <div id="answers" class="answers"></div>
-            <div id="quizFeedback" class="quiz-feedback hidden"></div>
-            <button id="nextQuestion" class="primary hidden" type="button">ДАЛЬШЕ →</button>
-          </div>
-
-          <div id="quizResult" class="result-card hidden">
-            <div id="resultScore" class="result-score"></div>
-            <h3 id="resultTitle"></h3>
-            <p id="resultText"></p>
-            <div id="resultActions" class="result-actions"></div>
-          </div>
-        </div>
+        <div id="test01" class="route"><div class="quiz-head"><div class="eyebrow">MODULE 01 / CHECKPOINT</div><h2>TEST 01</h2><p>Нужно минимум 4/5. После этого Module 02 откроется автоматически.</p></div><div id="quizCard" class="quiz-card"><div id="questionMeta" class="eyebrow"></div><h3 id="questionText"></h3><div id="answers" class="answers"></div><div id="quizFeedback" class="quiz-feedback hidden"></div><button id="nextQuestion" class="primary hidden" type="button">ДАЛЬШЕ →</button></div><div id="quizResult" class="result-card hidden"><div id="resultScore" class="result-score"></div><h3 id="resultTitle"></h3><p id="resultText"></p><div id="resultActions" class="result-actions"></div></div></div>
 
         <div id="module02" class="route">
-          <div id="module02Locked" class="locked-screen">
-            <div class="lock">×</div>
-            <div class="eyebrow">MODULE 02</div>
-            <h2>ПЕРСОНАЖ ПОКА ЗАКРЫТ.</h2>
-            <p>Сначала пройди Test 01 минимум на 4/5.</p>
-            <button class="primary" data-go="test01" type="button">К TEST 01 →</button>
-          </div>
-          <div id="module02Open" class="lesson-placeholder hidden">
-            <div class="eyebrow">MODULE 02 / UNLOCKED</div>
-            <h2>ПЕРСОНАЖ</h2>
-            <p>Вот сюда дальше встанет полноценная вторая страница. В прототипе главное — Module 02 открылся именно после успешного Test 01 и останется открытым на другом устройстве после входа в тот же аккаунт.</p>
+          <div id="module02Locked" class="locked-screen"><div class="lock">×</div><div class="eyebrow">MODULE 02</div><h2>ПЕРСОНАЖ ПОКА ЗАКРЫТ.</h2><p>Сначала пройди Test 01 минимум на 4/5.</p><button class="primary" data-go="test01" type="button">К TEST 01 →</button></div>
+          <div id="module02Open" class="hidden">
+            <div class="lesson-hero"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/02_character.jpg" alt=""><div class="lesson-overlay"></div><div class="lesson-copy"><div class="eyebrow">BIMBO METHOD / MODULE 02</div><h2>ПЕРСОНАЖ</h2><p>После концепции мы собираем не анкету, а систему поведения. Девушка должна ощущаться одинаково узнаваемой в разных ситуациях.</p></div></div>
+            <div class="lesson-body">
+              <section class="lesson-section"><div class="eyebrow">01 / НЕ АНКЕТА</div><h3>ПЕРСОНАЖ — ЭТО НЕ СПИСОК «ЛЮБИТ КОФЕ И ПУТЕШЕСТВИЯ».</h3><p>Характер проявляется в том, как она говорит, на что реагирует, что считает нормальным, чего избегает и какие маленькие привычки повторяются из раза в раз.</p></section>
+              <section class="lesson-section"><div class="eyebrow">02 / ЯДРО</div><h3>ЧТО В НЕЙ ОСТАЁТСЯ НЕИЗМЕННЫМ?</h3><p>Определи базовый темперамент и главную потребность персонажа. Она может быть дерзкой, но нуждаться в одобрении. Спокойной, но очень контролирующей. Именно сочетание двух сил делает поведение узнаваемым.</p></section>
+              <div class="trait-grid"><article><small>ГОЛОС</small><h4>КАК ОНА ГОВОРИТ</h4><p>Длина фраз, сленг, юмор, прямота, любимые реакции.</p></article><article><small>ПРИВЫЧКИ</small><h4>ЧТО ПОВТОРЯЕТСЯ</h4><p>Ритуалы, маленькие действия, бытовые детали.</p></article><article><small>ПРОТИВОРЕЧИЯ</small><h4>ЧТО ДЕЛАЕТ ЕЁ ЖИВОЙ</h4><p>Уверенная, но ревнивая. Хаотичная, но одержима порядком в одной вещи.</p></article><article><small>ГРАНИЦЫ</small><h4>ЧЕГО ОНА НЕ ДЕЛАЕТ</h4><p>То, что защищает характер от расползания в случайный контент.</p></article></div>
+              <section class="lesson-section"><div class="eyebrow">03 / ГОЛОС</div><h3>ЕСЛИ УБРАТЬ АВАТАРКУ, ЕЁ ВСЁ РАВНО ДОЛЖНО БЫТЬ МОЖНО УЗНАТЬ.</h3><p>Голос — это не только словарь. Это темп, уровень откровенности, реакция на комплименты, раздражение, флирт, скуку и внимание аудитории.</p></section>
+              <section class="lesson-section compare"><div class="eyebrow">04 / СЛАБО VS СИЛЬНО</div><div class="compare-grid"><article><small>СЛАБО</small><h4>«ОНА ВЕСЁЛАЯ И УВЕРЕННАЯ»</h4><p>Абстрактно. Непонятно, как это выглядит в конкретном сообщении.</p></article><article><small>СИЛЬНО</small><h4>«НА КОМПЛИМЕНТ ОТВЕЧАЕТ ТАК, БУДТО ОН БЫЛ ОЖИДАЕМ, НО СРАЗУ ПЕРЕВОДИТ В ШУТКУ»</h4><p>Это уже правило поведения.</p></article></div></section>
+              <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/09_final_identity.jpg" alt=""></figure>
+              <section class="lesson-section"><div class="eyebrow">05 / ПРИВЫЧКИ</div><h3>ПОВТОРЫ СОЗДАЮТ ОЩУЩЕНИЕ ЖИЗНИ.</h3><p>Не повторяй один и тот же кадр. Повторяй характерные действия: ночной кофе, голосовые после полуночи, привычку фотографировать покупки, злиться на будильник или комментировать всё мемами.</p></section>
+              <section class="lesson-section"><div class="eyebrow">06 / ПРОТИВОРЕЧИЯ</div><h3>ИДЕАЛЬНЫЕ ПЕРСОНАЖИ БЫСТРО СТАНОВЯТСЯ ПЛОСКИМИ.</h3><p>Одно хорошее противоречие даёт больше материала, чем десять положительных качеств. Оно создаёт напряжение, реакции и маленькие истории.</p></section>
+              <section class="lesson-section"><div class="eyebrow">07 / ГРАНИЦЫ</div><h3>ПЕРСОНАЖ ДОЛЖЕН УМЕТЬ ГОВОРИТЬ «НЕТ».</h3><p>Зафиксируй несколько вещей, которые она не делает и не говорит. Это не бюрократия. Это защита от того, чтобы через неделю модель стала совсем другим человеком.</p></section>
+              <section class="lesson-section checklist"><div class="eyebrow">08 / ПРОВЕРКА</div><h3>ПЕРСОНАЖ ГОТОВ, ЕСЛИ ТЫ МОЖЕШЬ ПРЕДСКАЗАТЬ ЕЁ РЕАКЦИЮ.</h3><ol><li>Как она отвечает на комплимент?</li><li>Что делает, когда злится?</li><li>Как ведёт себя, когда ей скучно?</li><li>Какие привычки повторяются?</li><li>Что она никогда не сделает ради контента?</li></ol></section>
+              <figure class="visual-wide"><img src="https://raw.githubusercontent.com/drgrtt/bim_assets/main/10_final_lifestyle.jpg" alt=""></figure>
+              <section class="formula-card"><div class="eyebrow">09 / ФОРМУЛА</div><h3>ЯДРО + ГОЛОС + ПРИВЫЧКИ + ПРОТИВОРЕЧИЯ + ГРАНИЦЫ = ПЕРСОНАЖ, КОТОРЫЙ НЕ РАССЫПАЕТСЯ МЕЖДУ ПОСТАМИ.</h3></section>
+              <div class="end-card"><small>MODULE 02 / CHECKPOINT</small><h3>ТЕПЕРЬ ПРОВЕРЯЕМ НЕ ТЕОРИЮ, А ЛОГИКУ ПОВЕДЕНИЯ.</h3><p>5 вопросов. Проходной результат — 4/5.</p><button class="primary" data-go="test02" type="button">ПЕРЕЙТИ К TEST 02 →</button></div>
+            </div>
           </div>
         </div>
+
+        <div id="test02" class="route"><div id="test02Locked" class="locked-screen"><div class="lock">×</div><div class="eyebrow">TEST 02</div><h2>СНАЧАЛА ОТКРОЙ MODULE 02.</h2><p>Для доступа нужен успешный Test 01.</p></div><div id="test02Open" class="hidden"><div class="quiz-head"><div class="eyebrow">MODULE 02 / CHECKPOINT</div><h2>TEST 02</h2><p>Нужно минимум 4/5. После этого откроется Module 03 / Внешность.</p></div><div id="quiz2Card" class="quiz-card"><div id="question2Meta" class="eyebrow"></div><h3 id="question2Text"></h3><div id="answers2" class="answers"></div><div id="quiz2Feedback" class="quiz-feedback hidden"></div><button id="nextQuestion2" class="primary hidden" type="button">ДАЛЬШЕ →</button></div><div id="quiz2Result" class="result-card hidden"><div id="result2Score" class="result-score"></div><h3 id="result2Title"></h3><p id="result2Text"></p><div id="result2Actions" class="result-actions"></div></div></div></div>
+
+        <div id="module03" class="route"><div id="module03Locked" class="locked-screen"><div class="lock">×</div><div class="eyebrow">MODULE 03</div><h2>ВНЕШНОСТЬ ПОКА ЗАКРЫТА.</h2><p>Сначала пройди Test 02 минимум на 4/5.</p><button class="primary" data-go="test02" type="button">К TEST 02 →</button></div><div id="module03Open" class="lesson-placeholder hidden"><div class="eyebrow">MODULE 03 / UNLOCKED</div><h2>ВНЕШНОСТЬ</h2><p>Техническая цепочка работает: Start → Module 01 → Test 01 → Module 02 → Test 02 → Module 03.</p></div></div>
       </section>
     </div>
   </div>
