@@ -1,29 +1,23 @@
-// =========================================================
-// BIMBO METHOD prototype
-// Replace firebaseConfig below after creating a Firebase web app.
-// Until then the prototype works in DEMO mode with localStorage.
-// =========================================================
+import {
+  login,
+  logout,
+  getUser,
+  handleAuthCallback,
+  acceptInvite,
+  requestPasswordRecovery,
+  updateUser
+} from "https://esm.sh/@netlify/identity@2.0.0";
 
-const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-};
-
-const firebaseReady = Object.values(firebaseConfig).every(Boolean);
+const defaultProgress = () => ({
+  module01Viewed: false,
+  test01Passed: false,
+  test01Best: 0,
+  module02Unlocked: false
+});
 
 const state = {
   user: null,
-  progress: {
-    module01Viewed: false,
-    test01Passed: false,
-    test01Best: 0,
-    module02Unlocked: false
-  },
-  authMode: "login"
+  progress: defaultProgress()
 };
 
 const quiz = [
@@ -77,40 +71,76 @@ const quiz = [
 let quizIndex = 0;
 let quizScore = 0;
 let quizLocked = false;
+let pendingInviteToken = null;
 
 const $ = (id) => document.getElementById(id);
 
-function loadDemoState(){
-  try{
-    const saved = JSON.parse(localStorage.getItem("bimbo-method-demo-progress") || "null");
-    if(saved) state.progress = {...state.progress, ...saved};
-  }catch(e){}
+function showBanner(text){
+  $("setupBanner").textContent = text;
+  $("setupBanner").classList.remove("hidden");
 }
 
-function saveDemoState(){
-  localStorage.setItem("bimbo-method-demo-progress", JSON.stringify(state.progress));
+function hideBanner(){
+  $("setupBanner").classList.add("hidden");
 }
 
-function setAuthMode(mode){
-  state.authMode = mode;
-  $("tabLogin").classList.toggle("active", mode === "login");
-  $("tabSignup").classList.toggle("active", mode === "signup");
-  $("authSubmit").textContent = mode === "login" ? "ВОЙТИ →" : "СОЗДАТЬ АККАУНТ →";
-  $("password").autocomplete = mode === "login" ? "current-password" : "new-password";
+function setAuthScreen(mode){
+  $("authView").classList.remove("hidden");
+  $("appView").classList.add("hidden");
+  $("authForm").classList.toggle("hidden", mode !== "login");
+  $("inviteForm").classList.toggle("hidden", mode !== "invite");
+  $("recoveryForm").classList.toggle("hidden", mode !== "recovery");
+  $("forgotPassword").classList.toggle("hidden", mode !== "login");
+  $("authHint").classList.toggle("hidden", mode !== "login");
   $("authMessage").textContent = "";
+
+  if(mode === "invite"){
+    $("authIntro").textContent = "Приглашение подтверждено. Придумай пароль для входа в BIMBO METHOD.";
+  }else if(mode === "recovery"){
+    $("authIntro").textContent = "Придумай новый пароль для своего аккаунта.";
+  }else{
+    $("authIntro").textContent = "Войди в свой курс. Прогресс и результаты тестов сохраняются за твоим аккаунтом.";
+  }
 }
 
-function showApp(email){
+async function loadProgress(){
+  const response = await fetch("/api/progress", { cache: "no-store" });
+  if(response.status === 401) throw new Error("Сессия истекла. Войди ещё раз.");
+  if(!response.ok) throw new Error("Не удалось загрузить прогресс.");
+  const data = await response.json();
+  state.progress = {...defaultProgress(), ...data};
+}
+
+async function persistProgress(){
+  if(!state.user) return;
+  const response = await fetch("/api/progress", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      module01Viewed: !!state.progress.module01Viewed,
+      test01Best: Number(state.progress.test01Best || 0)
+    })
+  });
+  if(response.status === 401) throw new Error("Сессия истекла. Войди ещё раз.");
+  if(!response.ok) throw new Error("Не удалось сохранить прогресс.");
+  const saved = await response.json();
+  state.progress = {...defaultProgress(), ...saved};
+}
+
+async function enterApp(user){
+  hideBanner();
+  state.user = user;
+  try{
+    await loadProgress();
+  }catch(err){
+    showBanner(err?.message || "Не удалось загрузить прогресс.");
+    state.progress = defaultProgress();
+  }
   $("authView").classList.add("hidden");
   $("appView").classList.remove("hidden");
-  $("userEmail").textContent = email || "demo@bimbomethod.local";
+  $("userEmail").textContent = user?.email || "";
   renderProgress();
-  route("dashboard");
-}
-
-function showAuth(){
-  $("appView").classList.add("hidden");
-  $("authView").classList.remove("hidden");
+  route("dashboard", false);
 }
 
 function renderProgress(){
@@ -125,8 +155,6 @@ function renderProgress(){
   if(unlocked){
     $("module02Nav").innerHTML = "02. ПЕРСОНАЖ <span>OPEN</span>";
     $("module02State").innerHTML = '<button data-go="module02" type="button">ОТКРЫТЬ →</button>';
-    const b = $("module02State").querySelector("button");
-    if(b) b.addEventListener("click", () => route("module02"));
     $("module02Locked").classList.add("hidden");
     $("module02Open").classList.remove("hidden");
   }else{
@@ -137,11 +165,7 @@ function renderProgress(){
   }
 }
 
-function route(name){
-  if(name === "module02" && !state.progress.module02Unlocked){
-    name = "module02";
-  }
-
+function route(name, saveView = true){
   document.querySelectorAll(".route").forEach(el => el.classList.remove("active"));
   const target = $(name);
   if(target) target.classList.add("active");
@@ -150,13 +174,12 @@ function route(name){
     btn.classList.toggle("active", btn.dataset.route === name);
   });
 
-  if(name === "module01"){
+  if(name === "module01" && saveView){
     state.progress.module01Viewed = true;
-    persistProgress();
+    persistProgress().catch(err => showBanner(err.message));
   }
 
   if(name === "test01") resetQuiz();
-
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
@@ -208,24 +231,27 @@ function resetQuiz(){
   renderQuiz();
 }
 
-function showQuizResult(){
+async function showQuizResult(){
   $("quizCard").classList.add("hidden");
   $("quizResult").classList.remove("hidden");
   $("resultScore").textContent = `${quizScore}/5`;
 
-  const passed = quizScore >= 4;
+  state.progress.test01Best = Math.max(state.progress.test01Best || 0, quizScore);
+
+  try{
+    await persistProgress();
+    hideBanner();
+  }catch(err){
+    showBanner(err?.message || "Не удалось сохранить результат.");
+  }
+
+  const passed = state.progress.test01Passed;
   if(passed){
-    state.progress.test01Passed = true;
-    state.progress.test01Best = Math.max(state.progress.test01Best || 0, quizScore);
-    state.progress.module02Unlocked = true;
-    persistProgress();
-    $("resultTitle").textContent = quizScore === 5 ? "SHE GETS IT." : "MODULE PASSED.";
-    $("resultText").textContent = "Module 02 открыт. Теперь можно перейти дальше, а результат останется в твоём прогрессе.";
+    $("resultTitle").textContent = state.progress.test01Best === 5 ? "SHE GETS IT." : "MODULE PASSED.";
+    $("resultText").textContent = "Module 02 открыт. Результат сохранён за твоим аккаунтом и останется после входа с другого устройства.";
     $("resultActions").innerHTML = '<button id="openM02" class="primary" type="button">ОТКРЫТЬ MODULE 02 →</button>';
     $("openM02").addEventListener("click", () => route("module02"));
   }else{
-    state.progress.test01Best = Math.max(state.progress.test01Best || 0, quizScore);
-    persistProgress();
     $("resultTitle").textContent = "ЕЩЁ РАЗ.";
     $("resultText").textContent = "Нужно минимум 4/5. Пересмотри логику модуля и попробуй ещё раз.";
     $("resultActions").innerHTML = '<button id="retryQuiz" class="primary" type="button">ПЕРЕСДАТЬ →</button>';
@@ -234,102 +260,90 @@ function showQuizResult(){
   renderProgress();
 }
 
-async function persistProgress(){
-  if(!firebaseReady){
-    saveDemoState();
-    return;
-  }
-  if(window.__bimboSaveProgress) await window.__bimboSaveProgress(state.progress);
-}
-
-async function startFirebase(){
-  if(!firebaseReady){
-    loadDemoState();
-    $("setupBanner").classList.remove("hidden");
-    return;
-  }
-
-  const [{initializeApp}, authMod, firestoreMod] = await Promise.all([
-    import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"),
-    import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"),
-    import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js")
-  ]);
-
-  const app = initializeApp(firebaseConfig);
-  const auth = authMod.getAuth(app);
-  const db = firestoreMod.getFirestore(app);
-
-  window.__bimboAuth = auth;
-
-  window.__bimboLoadProgress = async function(uid){
-    const ref = firestoreMod.doc(db, "users", uid);
-    const snap = await firestoreMod.getDoc(ref);
-    if(snap.exists()) state.progress = {...state.progress, ...snap.data().progress};
-  };
-
-  window.__bimboSaveProgress = async function(progress){
-    const user = auth.currentUser;
-    if(!user) return;
-    const ref = firestoreMod.doc(db, "users", user.uid);
-    await firestoreMod.setDoc(ref, {
-      email: user.email,
-      progress,
-      updatedAt: firestoreMod.serverTimestamp()
-    }, {merge:true});
-  };
-
-  window.__bimboLogin = (email,password) => authMod.signInWithEmailAndPassword(auth,email,password);
-  window.__bimboSignup = (email,password) => authMod.createUserWithEmailAndPassword(auth,email,password);
-  window.__bimboLogout = () => authMod.signOut(auth);
-
-  authMod.onAuthStateChanged(auth, async user => {
-    state.user = user;
-    if(user){
-      await window.__bimboLoadProgress(user.uid);
-      showApp(user.email);
-    }else{
-      showAuth();
-    }
-  });
-}
-
-$("tabLogin").addEventListener("click", () => setAuthMode("login"));
-$("tabSignup").addEventListener("click", () => setAuthMode("signup"));
-
 $("authForm").addEventListener("submit", async e => {
   e.preventDefault();
   const email = $("email").value.trim();
   const password = $("password").value;
   $("authMessage").textContent = "";
-
-  if(!firebaseReady){
-    $("authMessage").textContent = "Firebase пока не подключён. Нажми «Войти в демо».";
-    return;
-  }
+  $("authSubmit").disabled = true;
 
   try{
-    if(state.authMode === "login") await window.__bimboLogin(email,password);
-    else await window.__bimboSignup(email,password);
+    const user = await login(email, password);
+    await enterApp(user);
   }catch(err){
     $("authMessage").textContent = "Не получилось войти: " + (err?.message || "ошибка");
+  }finally{
+    $("authSubmit").disabled = false;
   }
 });
 
-$("demoLogin").addEventListener("click", () => {
-  loadDemoState();
-  showApp("demo@bimbomethod.local");
+$("forgotPassword").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  if(!email){
+    $("authMessage").textContent = "Сначала введи email, на который зарегистрирован доступ.";
+    return;
+  }
+  try{
+    await requestPasswordRecovery(email);
+    $("authMessage").textContent = "Письмо для смены пароля отправлено. Проверь почту.";
+  }catch(err){
+    $("authMessage").textContent = "Не получилось отправить письмо: " + (err?.message || "ошибка");
+  }
+});
+
+$("inviteForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const p1 = $("invitePassword").value;
+  const p2 = $("invitePassword2").value;
+  if(p1 !== p2){
+    $("authMessage").textContent = "Пароли не совпадают.";
+    return;
+  }
+  if(!pendingInviteToken){
+    $("authMessage").textContent = "Ссылка приглашения недействительна или уже использована.";
+    return;
+  }
+  try{
+    const user = await acceptInvite(pendingInviteToken, p1);
+    pendingInviteToken = null;
+    await enterApp(user);
+  }catch(err){
+    $("authMessage").textContent = "Не получилось активировать доступ: " + (err?.message || "ошибка");
+  }
+});
+
+$("recoveryForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const p1 = $("recoveryPassword").value;
+  const p2 = $("recoveryPassword2").value;
+  if(p1 !== p2){
+    $("authMessage").textContent = "Пароли не совпадают.";
+    return;
+  }
+  try{
+    await updateUser({password:p1});
+    const user = await getUser();
+    if(user) await enterApp(user);
+    else setAuthScreen("login");
+  }catch(err){
+    $("authMessage").textContent = "Не получилось сохранить пароль: " + (err?.message || "ошибка");
+  }
 });
 
 $("logoutBtn").addEventListener("click", async () => {
-  if(firebaseReady && window.__bimboLogout) await window.__bimboLogout();
-  else showAuth();
+  try{ await logout(); }catch(e){}
+  state.user = null;
+  state.progress = defaultProgress();
+  setAuthScreen("login");
 });
 
-$("nextQuestion").addEventListener("click", () => {
+$("nextQuestion").addEventListener("click", async () => {
   if(quizIndex < quiz.length-1){
     quizIndex++;
     renderQuiz();
-  }else showQuizResult();
+  }else{
+    await showQuizResult();
+  }
 });
 
 document.addEventListener("click", e => {
@@ -337,12 +351,35 @@ document.addEventListener("click", e => {
   if(go) route(go.dataset.go);
 
   const nav = e.target.closest("[data-route]");
-  if(nav){
-    const name = nav.dataset.route;
-    if(name === "module02" && !state.progress.module02Unlocked){
-      route("module02");
-    }else route(name);
-  }
+  if(nav) route(nav.dataset.route);
 });
 
-startFirebase();
+async function bootstrap(){
+  setAuthScreen("login");
+  try{
+    const callback = await handleAuthCallback();
+
+    if(callback?.type === "invite" && callback.token){
+      pendingInviteToken = callback.token;
+      setAuthScreen("invite");
+      return;
+    }
+
+    if(callback?.type === "recovery"){
+      setAuthScreen("recovery");
+      return;
+    }
+
+    const user = callback?.user || await getUser();
+    if(user){
+      await enterApp(user);
+    }else{
+      setAuthScreen("login");
+    }
+  }catch(err){
+    setAuthScreen("login");
+    $("authMessage").textContent = "Ошибка авторизации: " + (err?.message || "попробуй ещё раз");
+  }
+}
+
+bootstrap();
