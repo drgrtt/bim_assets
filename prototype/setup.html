@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BIMBO METHOD — test signup</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="auth-view">
+    <section class="auth-card">
+      <div class="eyebrow">BIMBO METHOD / TEST SETUP</div>
+      <h1>ТЕСТОВЫЙ<br><span>АККАУНТ</span></h1>
+      <p>Эта страница нужна только для первого тестового аккаунта. Перед регистрацией временно поставь Netlify Identity → Registration preferences → Open.</p>
+
+      <form id="signupForm">
+        <label>Email<input id="signupEmail" type="email" autocomplete="email" required></label>
+        <label>Пароль<input id="signupPassword" type="password" autocomplete="new-password" minlength="6" required></label>
+        <button id="signupSubmit" class="primary" type="submit">СОЗДАТЬ ТЕСТОВЫЙ АККАУНТ →</button>
+      </form>
+
+      <div id="signupMessage" class="message"></div>
+      <a class="ghost setup-link" href="/">ВЕРНУТЬСЯ К ВХОДУ</a>
+    </section>
+  </main>
+  <script type="module" src="./setup.js"></script>
+</body>
+</html>
